@@ -25,7 +25,11 @@ export const LocationSelector = () => {
     try {
       const res = await fetch('/api/locations');
       const data = await res.json();
-      setLocations(data);
+      if (Array.isArray(data)) {
+        setLocations(data);
+      } else {
+        console.error("Invalid locations data:", data);
+      }
     } catch (err) {
       console.error(err);
     } finally {
