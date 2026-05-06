@@ -12,6 +12,7 @@ import { useMoodStore } from '@/store/moodStore';
 import { AIChat } from '@/components/menu/AIChat';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useToast } from '@/components/providers/ToastProvider';
+import { useUIStore } from '@/store/uiStore';
 
 export default function MenuPage() {
   const { data: session, status } = useSession();
@@ -173,7 +174,13 @@ export default function MenuPage() {
                 key={`featured-${item.id}`} 
                 {...item} 
                 isAuthenticated={isAuthenticated}
-                onClick={() => setSelectedItem(item)}
+                onClick={() => {
+                  if (!isAuthenticated) {
+                    useUIStore.getState().openAuthModal();
+                  } else {
+                    setSelectedItem(item);
+                  }
+                }}
               />
             ))}
           </div>
@@ -207,7 +214,13 @@ export default function MenuPage() {
                     key={`rec-${item.id}`} 
                     {...item} 
                     isAuthenticated={isAuthenticated}
-                    onClick={() => setSelectedItem(item)}
+                    onClick={() => {
+                      if (!isAuthenticated) {
+                        useUIStore.getState().openAuthModal();
+                      } else {
+                        setSelectedItem(item);
+                      }
+                    }}
                   />
                 ))}
               </div>
@@ -227,7 +240,13 @@ export default function MenuPage() {
                 key={item.id} 
                 {...item} 
                 isAuthenticated={isAuthenticated}
-                onClick={() => setSelectedItem(item)}
+                onClick={() => {
+                  if (!isAuthenticated) {
+                    useUIStore.getState().openAuthModal();
+                  } else {
+                    setSelectedItem(item);
+                  }
+                }}
               />
             ))}
           </div>

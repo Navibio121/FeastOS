@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { Navbar } from '@/components/globals/Navbar';
 import { Calendar, Users, Clock, MapPin, CheckCircle2, ChevronRight, Loader2 } from 'lucide-react';
+import { useSession } from 'next-auth/react';
+import { useUIStore } from '@/store/uiStore';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
@@ -18,6 +20,7 @@ const ZONES = [
 ];
 
 export default function ReservationsPage() {
+  const { data: session } = useSession();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -183,7 +186,13 @@ export default function ReservationsPage() {
 
               <button 
                 disabled={!formData.date || !formData.time}
-                onClick={nextStep}
+                onClick={() => {
+                  if (!session) {
+                    useUIStore.getState().openAuthModal();
+                  } else {
+                    nextStep();
+                  }
+                }}
                 className="w-full py-4 bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-yellow-400 text-black font-bold rounded-2xl transition-all shadow-lg shadow-yellow-500/10"
               >
                 Continue to Personal Details

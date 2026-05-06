@@ -19,6 +19,8 @@ interface MenuItemCardProps {
   isAuthenticated: boolean;
 }
 
+import { useUIStore } from '@/store/uiStore';
+
 export const MenuItemCard = ({ 
   name, 
   price, 
@@ -28,12 +30,22 @@ export const MenuItemCard = ({
   onClick,
   isAuthenticated 
 }: MenuItemCardProps) => {
+  const { openAuthModal } = useUIStore();
+
+  const handleCardClick = () => {
+    if (!isAuthenticated) {
+      openAuthModal();
+    } else if (onClick) {
+      onClick();
+    }
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      onClick={onClick}
+      onClick={handleCardClick}
       className="group relative bg-zinc-900 rounded-[2rem] overflow-hidden border border-white/5 cursor-pointer hover:border-white/10 transition-all duration-500"
     >
       {/* Image Container */}
