@@ -16,8 +16,11 @@ const MOODS = [
 ];
 
 import { useMoodStore } from '@/store/moodStore';
+import { useSession } from 'next-auth/react';
+import { useUIStore } from '@/store/uiStore';
 
 export const MoodEngine = () => {
+  const { data: session } = useSession();
   const { selectedMoodId, setMood } = useMoodStore();
   const selected = MOODS.find(m => m.id === selectedMoodId) || null;
 
@@ -73,6 +76,12 @@ export const MoodEngine = () => {
                 <p className="text-zinc-400 mb-8">{selected.desc}</p>
                 <Link 
                   href="/menu"
+                  onClick={(e) => {
+                    if (!session) {
+                      e.preventDefault();
+                      useUIStore.getState().openAuthModal();
+                    }
+                  }}
                   className="inline-flex items-center gap-3 text-yellow-500 font-bold hover:gap-5 transition-all"
                 >
                   View Details <ArrowRight className="w-5 h-5" />

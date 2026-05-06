@@ -62,19 +62,38 @@ export const Navbar = () => {
           <div className="hidden md:flex items-center gap-10">
             <Link 
               href="/menu" 
-              onClick={handleMenuClick}
+              onClick={(e) => {
+                if (!session) {
+                  e.preventDefault();
+                  useUIStore.getState().openAuthModal();
+                } else {
+                  handleMenuClick(e);
+                }
+              }}
               className="text-[11px] font-black uppercase tracking-[0.3em] text-zinc-400 hover:text-yellow-500 transition-colors"
             >
               Menu
             </Link>
             <Link 
               href="/reservations" 
+              onClick={(e) => {
+                if (!session) {
+                  e.preventDefault();
+                  useUIStore.getState().openAuthModal();
+                }
+              }}
               className="text-[11px] font-black uppercase tracking-[0.3em] text-zinc-400 hover:text-yellow-500 transition-colors"
             >
               Reservations
             </Link>
             <Link 
               href="/mood-to-meal" 
+              onClick={(e) => {
+                if (!session) {
+                  e.preventDefault();
+                  useUIStore.getState().openAuthModal();
+                }
+              }}
               className="flex items-center gap-1.5 text-[11px] font-black uppercase tracking-[0.3em] text-zinc-400 hover:text-yellow-500 transition-colors group"
             >
               <Sparkles className="w-3 h-3 text-yellow-500 group-hover:animate-spin" />

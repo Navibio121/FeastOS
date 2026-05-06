@@ -47,6 +47,8 @@ export const metadata: Metadata = {
 
 import { ToastProvider } from "@/components/providers/ToastProvider";
 
+import { AuthModal } from "@/components/auth/AuthModal";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -59,6 +61,7 @@ export default function RootLayout({
           <ToastProvider>
             {children}
             <CartDrawer />
+            <AuthModal />
           </ToastProvider>
         </AuthProvider>
       </body>

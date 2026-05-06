@@ -15,14 +15,18 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
   providers: [
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || "",
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
-    }),
-    GitHubProvider({
-      clientId: process.env.GITHUB_ID || "",
-      clientSecret: process.env.GITHUB_SECRET || "",
-    }),
+    ...(process.env.GOOGLE_CLIENT_ID ? [
+      GoogleProvider({
+        clientId: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+      })
+    ] : []),
+    ...(process.env.GITHUB_ID ? [
+      GitHubProvider({
+        clientId: process.env.GITHUB_ID,
+        clientSecret: process.env.GITHUB_SECRET || "",
+      })
+    ] : []),
     CredentialsProvider({
       name: "credentials",
       credentials: {

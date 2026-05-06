@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronRight, ChevronLeft, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import { useUIStore } from '@/store/uiStore';
 
 const SLIDES = [
   {
@@ -58,6 +60,7 @@ const SLIDES = [
 ];
 
 export const HeroSlider = () => {
+  const { data: session } = useSession();
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
@@ -117,6 +120,12 @@ export const HeroSlider = () => {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
               <Link 
                 href="/menu"
+                onClick={(e) => {
+                  if (!session) {
+                    e.preventDefault();
+                    useUIStore.getState().openAuthModal();
+                  }
+                }}
                 className="group px-10 py-5 bg-yellow-500 hover:bg-yellow-400 text-black font-bold rounded-2xl transition-all flex items-center gap-2 text-lg shadow-[0_0_30px_rgba(234,179,8,0.3)]"
               >
                 Explore Menu
@@ -124,6 +133,12 @@ export const HeroSlider = () => {
               </Link>
               <Link 
                 href="/reservations"
+                onClick={(e) => {
+                  if (!session) {
+                    e.preventDefault();
+                    useUIStore.getState().openAuthModal();
+                  }
+                }}
                 className="px-10 py-5 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-bold rounded-2xl transition-all text-lg"
               >
                 Book a Table
