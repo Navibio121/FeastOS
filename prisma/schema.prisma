@@ -1,0 +1,188 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          String    @default("USER")
+  points        Int       @default(0)
+  accounts      Account[]
+  sessions      Session[]
+  orders        Order[]
+  reservations  Reservation[]
+  notifications Notification[]
+  locationId    String?
+  location      Location?   @relation(fields: [locationId], references: [id])
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Order {
+  id          String      @id @default(cuid())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  status      String      @default("PENDING")
+  total       Float
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  items       OrderItem[]
+  address     String?
+  phone       String?
+  locationId  String?
+  location    Location?   @relation(fields: [locationId], references: [id])
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id])
+  productId String
+  name      String
+  price     Float
+  quantity  Int
+  image     String?
+}
+
+model Reservation {
+  id             String   @id @default(cuid())
+  createdAt      DateTime @default(now())
+  date           String
+  time           String
+  guests         Int
+  zone           String
+  name           String
+  email          String
+  phone          String
+  specialRequest String?
+  userId         String?
+  user           User?    @relation(fields: [userId], references: [id])
+  status         String   @default("CONFIRMED")
+  locationId     String?
+  location       Location? @relation(fields: [locationId], references: [id])
+
+}
+
+model MenuItem {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  category    String
+  image       String
+  isVegan     Boolean  @default(false)
+  isSpicy     Boolean  @default(false)
+  isAvailable Boolean  @default(true)
+  stock       Int      @default(99)
+  ingredients String?  // comma-separated list or JSON
+  originStory String?  // cultural backstory
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  wasteLogs   WasteLog[]
+}
+
+model Coupon {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  discount    Float    // Percentage (e.g. 10.0 for 10%)
+  isActive    Boolean  @default(true)
+  expiresAt   DateTime?
+  createdAt   DateTime @default(now())
+}
+
+model Location {
+  id          String   @id @default(cuid())
+  name        String
+  address     String
+  city        String
+  phone       String
+  image       String
+  lat         Float    // For real-time tracking map
+  lng         Float    // For real-time tracking map
+  isOpen      Boolean  @default(true)
+  users       User[]
+  orders      Order[]
+  reservations Reservation[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model WasteLog {
+  id          String   @id @default(cuid())
+  menuItemId  String
+  menuItem    MenuItem @relation(fields: [menuItemId], references: [id])
+  quantity    Int
+  reason      String   // e.g., "Expired", "Damaged", "Incorrect Prep"
+  createdAt   DateTime @default(now())
+  staffName   String?
+}
+
+model GlobalSettings {
+  id              String   @id @default("current")
+  restaurantName  String   @default("FeastOS Elite Dining")
+  contactEmail    String   @default("reservations@feastos.com")
+  contactPhone    String   @default("+234 800 FEAST OS")
+  taxRate         Float    @default(7.5)
+  deliveryFee     Float    @default(5.0)
+  currency        String   @default("USD")
+  address         String   @default("123 Culinary Avenue, Lagos")
+  isOpen          Boolean  @default(true)
+  updatedAt       DateTime @updatedAt
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  title     String
+  message   String
+  type      String   // INFO, SUCCESS, WARNING, ORDER
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

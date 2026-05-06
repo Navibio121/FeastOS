@@ -1,0 +1,355 @@
+Confidential -- Internal Use Only                                                                                                                                                                         Page 1
+Prepared by: Product Team | Status: Draft → Review
+Version 1.0 • April 2026 • Confidential
+Product Requirements Document
+Restaurant Web Application
+FeastOS
+ν
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (0) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                         Page 2
+Mobile Lighthouse score                                                         > 90 / 100
+Uptime SLA                                                                             99.9 %
+Customer retention (loyalty)                                                    > 35 % repeat visits
+Table booking abandonment rate                                           < 15 %
+Average order processing time                                               < 90 seconds
+Online order conversion rate                                                   > 4.5 %
+Metric                                                                          Year 1 Target
+networks, POS systems, and payment gateways out of the box.
+establishments. It is built mobile-first, PWA-compliant, and designed to integrate with third-party delivery
+The platform targets three restaurant archetypes: quick-service (QSR), casual dining, and fine-dining
+single coherent platform — eliminating the fragmented stack most restaurants cobble together today.
+unifies online ordering, real-time table reservations, kitchen operations, loyalty programs, and analytics into a
+FeastOS is a full-stack, cloud-native restaurant web application designed for modern food-service businesses. It
+1. Executive Summary
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (1) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                         Page 3
+opportunity by giving restaurants a white-label, owned digital storefront with a best-in-class UX.
+digital experience (vs. relying solely on aggregators) retain 3× more margin per order. FeastOS captures that
+The global online food delivery market is projected to exceed $1.6 trillion by 2027. Restaurants that own their
+2.2 Opportunity
+•     Restaurant owners lack real-time financial and operational dashboards.
+•     Kitchen staff receive orders through multiple channels causing duplication errors.
+•     Loyalty programs are siloed; customers cannot earn points across dine-in and delivery.
+•     Online menus are static and slow to update — pricing and availability lag behind real conditions.
+•     No single source of truth for inventory, capacity, or customer data.
+analytics).
+•     Restaurants manage 4–7 disconnected tools (POS, reservation app, delivery aggregator, loyalty platform,
+2.1 Current Pain Points
+2. Problem Statement
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (2) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                         Page 4
+•     Open ecosystem: REST + Webhook APIs enabling 3rd-party integrations without vendor lock-in.
+•     Multi-location scalability: single dashboard for chains managing up to 500 locations.
+•     Customer lifetime value: increase repeat visit rate through data-driven loyalty and personalization.
+•     Operational efficiency: reduce order-to-kitchen latency by 40% vs. manual/phone orders.
+•     Own-channel revenue: drive ≥30% of orders through the restaurant's own app/web within 12 months.
+3.2 Strategic Goals
+Michelin-starred brands and global fast-food chains have, at a fraction of the cost."
+"Give every restaurant — from a 10-seat bistro to a 500-cover chain — the same digital superpowers that
+3.1 Vision Statement
+3. Product Vision & Goals
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (3) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                         Page 5
+•     Goal: stable REST API with sandbox environment
+•     Frustration: no webhook support, poor API documentation
+•     Wants: SSO, role-based access, API docs, POS integration
+•     Age: 38, tech lead overseeing restaurant systems
+ν IT Admin — 'Emeka'
+•     Goal: unified analytics with auto-generated weekly reports
+•     Frustration: pulls data from 5 different CSV exports every Monday
+•     Wants: real-time revenue dashboard, staff scheduling, inventory alerts
+•     Age: 42, operations manager for a 3-location chain
+ν Restaurant Manager — 'Ifeoma'
+•     Goal: clear priority queue, allergen flags, and prep-time estimates
+•     Frustration: paper tickets from phone orders mixed with tablet tickets from aggregators
+•     Wants: single KDS screen showing all orders regardless of channel
+•     Age: 35, head chef at a casual dining restaurant
+ννν Kitchen Staff — 'Chidi'
+•     Goal: seamless omnichannel experience — book, order, pay, earn points in one place
+•     Frustration: re-entering details every visit, no loyalty rewards on web orders
+•     Wants: fast ordering, real-time tracking, dietary filters (vegan/gluten-free)
+•     Age: 28, urban professional, mobile-first
+ν Diner — 'Amara'
+4. User Personas
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (4) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                         Page 6
+•     Cart persists across sessions via localStorage + server-side sync for logged-in users.
+•     Fully responsive PWA with offline-capable service worker (show cached menu when offline).
+5.2 Online Ordering — Detailed Requirements
+Recommendations                                                                                                                  upsell engine
+AI Menu                                   P3                                            No                                           Collaborative filtering,
+payments, custom menus
+Catering & Event Booking       P3                                            No                                           Multi-day orders, deposit
+split bill by seat
+QR Code Dine-in Ordering      P2                                            No                                           Scan-to-order at table,
+alerts, waste logging
+Inventory Tracking                  P2                                            No                                           Stock levels, low-stock
+performance metrics
+Staff & Role Management       P2                                            No                                           RBAC, shift scheduling,
+chain KPIs
+Management                                                                                                                           per-location overrides,
+Multi-location                           P1                                            No                                           Centralized menu,
+hours, churn risk
+Analytics Dashboard               P1                                            No                                           Revenue, top items, peak
+centre
+promotional, preference
+Push & Email Notifications      P1                                            No                                           Transactional +
+WS
+tracking, ETA updates via
+Real-time Order Tracking        P1                                            No                                           Map-based delivery
+Program                                                                                                                                  referral codes, redemption
+Loyalty & Rewards                  P1                                            No                                           Points engine, tiers,
+Auth                                                                                                                                         addresses, order history
+Customer Accounts &             P0                                            Yes                                          Email/social login, saved
+(KDS)                                                                                                                                      timers, allergen flags
+Kitchen Display System          P0                                            Yes                                          Live order queue, prep
+cash-on-delivery, split bills
+Payment Gateway                   P0                                            Yes                                          Stripe, Paystack,
+confirmation email/SMS
+Table Reservations                 P0                                            Yes                                          Real-time slot availability,
+photos, dietary tags
+Digital Menu Management      P0                                            Yes                                          Live pricing, categories,
+PWA)                                                                                                                                       status tracking
+Online Ordering (Web +          P0                                            Yes                                          Cart, checkout, real-time
+Module                                 Priority                                  MVP?                            Key Capability
+5.1 Module Overview — Priority Matrix
+5. Feature Requirements
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (5) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                         Page 7
+•     Special occasions: birthday/anniversary flags trigger front-of-house notes to staff.
+•     Waitlist management: auto-notify next in queue when a booking cancels.
+•     No-show protection: optional card pre-authorisation for bookings of 6+ covers.
+•     Automated SMS/email reminders: 24 hrs and 2 hrs before booking.
+•     Google Calendar & Apple Calendar ICS export on confirmation.
+•     Interactive floor-plan selector: guests choose table zone (indoor/outdoor/bar/private).
+5.3 Reservation System — Detailed Requirements
+•     Dietary filter panel: vegan, halal, gluten-free, nut-free, calorie display.
+•     Group ordering: share a cart link; each member adds their own items, one checkout.
+•     Scheduled orders: place order now, choose delivery/pickup time up to 7 days ahead.
+•     Modifier support: add-ons, remove ingredients, cooking preferences (e.g. 'medium-rare').
+•     Real-time item availability: sold-out items auto-hide without page refresh (WebSocket).
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (6) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                         Page 8
+•     Export: CSV, PDF, scheduled email delivery to stakeholders.
+•     Operational: average ticket time, order error rate, peak-hour heatmap.
+•     Customer intelligence: new vs. returning, LTV cohorts, churn risk score.
+•     Menu performance: best/worst sellers, margin per item, attachment rate for add-ons.
+•     Revenue: daily/weekly/monthly P&L;, comparison vs. prior period, forecast.
+5.5 Analytics Dashboard — Detailed Requirements
+•     Referral engine: unique referral codes tracked to source, reward on first order.
+•     Gamification: streaks, challenges ('Order 5 times this month, earn 2× points').
+•     Redemption: points for discounts, free items, priority booking, exclusive events.
+•     Tier structure: Bronze → Silver → Gold → Platinum with escalating perks.
+•     Points earned: dine-in, online orders, referrals, app reviews, birthday bonus.
+5.4 Loyalty Program — Detailed Requirements
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (7) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                         Page 9
+6.3 Security Requirements
+•     Webhook delivery with exponential backoff, HMAC-SHA256 signature verification.
+•     Idempotency keys required on all POST endpoints for payment and order creation.
+•     Rate limiting: 100 req/min per IP (public), 1000 req/min per authenticated tenant.
+•     OpenAPI 3.1 spec auto-generated and hosted at /docs; Postman collection exported.
+•     RESTful APIs versioned under /api/v1/; tRPC for internal type-safe calls.
+6.2 API Design Principles
+ElastiCache)
+Infrastructure                                           AWS (ECS Fargate + RDS +                  Managed, auto-scaling, multi-AZ
+ECS                                                         downtime
+CI/CD                                                      GitHub Actions + Docker + AWS            Blue-green deployments, zero
+dashboards
+Monitoring                                               Sentry + DataDog + Grafana                  Error tracking, APM, custom
+tolerance
+Search                                                     Meilisearch (self-hosted)                         Fast menu search with typo
+Email/SMS                                              Resend (email) + Twilio (SMS)               Transactional reliability, webhooks
+Payments                                                Stripe (global) + Paystack (Africa)          Regional payment method coverage
+File Storage                                             AWS S3 + CloudFront CDN                    Menu images, receipts, QR codes
+middleware
+Auth                                                         NextAuth.js + JWT + OAuth2                  Social login, magic link, RBAC
+migrations
+ORM                                                        Prisma ORM                                           Type-safe queries, automatic
+(cache)                                                    reads
+Database                                                 PostgreSQL (primary) + Redis                ACID for transactions, sub-ms cache
+updates
+Real-time                                                 Socket.IO over Redis Adapter                Order status, KDS, inventory
+contracts
+Backend API                                           Node.js + Fastify (REST + tRPC)           High throughput, type-safe API
+state
+State Management                                  Zustand + React Query (TanStack)        Lightweight global state + server
+customization
+UI Components                                       shadcn/ui + Tailwind CSS                       Accessible, headless, fast
+Mobile App                                              React Native (Expo) + TypeScript           Code share with web, OTA updates
+great DX
+Frontend                                                  Next.js 14 (App Router) + TypeScript     SSR/ISR for SEO, PWA support,
+Layer                                      Technology / Service                                  Rationale
+6.1 Stack Overview
+6. Technical Architecture
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (8) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                       Page 10
+•     MFA available for admin accounts; enforced for roles with financial access.
+•     GDPR / NDPR compliant: data export, right-to-erasure, consent management.
+•     Data encryption at rest (AES-256) and in transit (TLS 1.3+).
+•     PCI-DSS SAQ-A compliance: no raw card data touches FeastOS servers.
+•     OWASP Top 10 compliance verified via quarterly penetration testing.
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (9) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                       Page 11
+name/phone → Confirm → Receive SMS + calendar invite.
+•     Select date/party size → View available times → Choose time slot → (Optional) pick zone → Enter
+Flow C — Table Reservation
+•     Time to reorder: < 30 seconds.
+•     Open app → Tap 'Reorder' on last order → Confirm address → Pay with saved card → Done.
+Flow B — Returning Customer (Logged In)
+•     Total steps to first order: ≤ 6 taps on mobile.
+(name, address, phone) → Choose payment → Order confirmed → Track in real-time.
+•     Land on restaurant homepage → Browse menu (filter by category/dietary) → Add to cart → Enter details
+Flow A — First-time Online Order (Guest)
+7.2 Key User Flows
+•     Localisation: i18n-ready from day one; RTL layout support for Arabic/Hebrew markets.
+•     Consistency: shared Figma design token library drives both web and mobile components.
+•     Accessibility: WCAG 2.1 AA — keyboard navigation, screen reader support, 4.5:1 contrast.
+•     Speed: Largest Contentful Paint < 2.5s, Cumulative Layout Shift < 0.1.
+•     Mobile-first: all flows designed for 375px viewport, enhanced for larger screens.
+7.1 Design Principles
+7. UX & Design System
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (10) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                       Page 12
+Accessibility                                            WCAG level                                            2.1 AA
+Compliance                                             GDPR data export                                   < 72-hour response
+Security                                                   Auth token expiry                                    15 min access / 7 day refresh
+Security                                                   SSL/TLS everywhere                              TLS 1.3 minimum
+Recovery                                                 RPO (data loss max)                               < 5 minutes
+Recovery                                                 RTO (major outage)                                < 30 minutes
+Availability                                               Uptime SLA (payment flow)                    99.95%
+Availability                                               Uptime SLA (platform)                            99.9% (< 8.7 hrs/yr)
+Scalability                                                Platform-wide concurrent users              100,000+
+Scalability                                                Concurrent users per restaurant             1,000+
+Performance                                           Page load (mobile, 4G)                           < 3 seconds
+Performance                                           API p95 response time                            < 200ms
+Category                                          Requirement                                            Metric
+8. Non-Functional Requirements
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (11) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                       Page 13
+into KDS
+Delivery Aggregators                              Glovo, Bolt Food (webhooks)                  Receive orders from aggregators
+expenses
+Accounting                                              QuickBooks, Xero (webhooks)                Auto-sync daily revenue and
+post-order
+Review Platforms                                    Google Reviews API                               Display ratings, prompt review
+Analytics                                                  Google Analytics 4, Mixpanel                  Funnel analysis, event tracking
+Social Login                                            Google, Facebook, Apple                       OAuth2 authentication
+POS Systems                                          Square, Toast, Revel (REST API)          Sync orders, menu, sales data
+campaigns
+Email                                                       Resend, SendGrid (fallback)                   Transactional emails, marketing
+SMS Notifications                                    Twilio, Termii (Africa)                              OTP, order status, reminders
+geofencing
+Delivery Logistics                                    Google Maps Platform                            Distance calc, route display,
+money
+Payment Processing                               Stripe, Paystack, Flutterwave                 Card, bank transfer, USSD, mobile
+Integration                                          Provider(s)                                            Purpose
+9. Third-Party Integrations
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (12) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                       Page 14
+setup + $49/mo).
+•     Add-ons: AI recommendations ($29/mo), advanced marketing automation ($49/mo), white-label app ($199
+•     Transaction fees: 0% on Starter; 0.5% on Growth; 0% on Pro+ (restaurant uses own payment keys).
+99.95%, CSM
+custom integrations, SLA
+Enterprise                                Custom                                    Unlimited                                 All Pro + dedicated infra,
+inventory, SLA 99.9%
+dashboard, API access,
+Pro                                          $299/mo                                  1–10                                          All Growth + multi-location
+KDS, priority support
+dine-in, push notifications,
+Growth                                    $129/mo                                  1–3                                            All Starter + loyalty, QR
+analytics, email support
+reservations, basic
+Starter                                     $49/mo                                    1                                              Online menu, ordering,
+Plan                                     Price                                Locations                          Key Features
+10. Monetization & Pricing Model
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (13) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                       Page 15
+Ensure satisfaction                                  NPS score — diners                                   > 60
+Ensure satisfaction                                  NPS score — restaurants                           > 55
+Maintain reliability                                   Platform uptime                                       > 99.9%
+Build loyalty                                             Loyalty program enrolment                     > 40% of registered users
+Improve operational quality                     Order accuracy rate                                > 98%
+aggregator
+Drive owned-channel revenue                % orders via FeastOS vs.                       > 30%
+Increase diner engagement                    Monthly active diners (MAD)                   50,000 MAD
+Grow platform adoption                           Paying restaurant accounts                    500 restaurants
+OKR                                               Key Result                                   Target (12 months)
+11. Success Metrics & KPIs
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (14) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                       Page 16
+demos
+creep                                                                                                                                       gating; weekly stakeholder
+Team velocity / scope             High                                         Medium                                   Fixed-scope sprints; MVP
+verification at checkout
+chargebacks                                                                                                                            velocity rules; phone
+Fraudulent orders /                  Medium                                   High                                         Stripe Radar + custom
+pricing discounts
+disintermediation                                                                                                                     direct orders; own-channel
+Aggregator                              High                                         Medium                                   Loyalty incentives for
+low-end devices                                                                                                                      < 200KB initial JS bundle
+Mobile performance on           Medium                                   High                                         Progressive enhancement;
+place
+non-compliance                                                                                                                       feature launch; DPA in
+GDPR / NDPR                        Low                                         Critical                                     Legal review at each
+pipeline
+changes                                                                                                                                  contract tests in CI
+POS API breaking                   Medium                                   High                                         Versioned adapter layer;
+circuit breaker pattern
+downtime                                                                                                                                 (Stripe → Paystack);
+Payment gateway                   Low                                         Critical                                     Multi-provider fallback
+Risk                                 Likelihood                               Impact                               Mitigation
+12. Risks & Mitigations
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (15) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                       Page 17
+services post-PMF.
+•     [Architecture] Monolith-first or microservices from day one? Recommendation: modular monolith, extract
+•     [UX research] Test 3-step vs. 5-step checkout flow with real users before committing to MVP checkout.
+•     [Legal review] Token-based loyalty points — do they constitute a financial instrument in NG/ZA jurisdictions?
+markets?
+•     [Research needed] Which African POS systems (e.g. Aloha, Sage) have the highest penetration in target
+•     [Decision needed] Self-hosted Meilisearch vs. Algolia — cost vs. operational overhead trade-off.
+•     [Decision needed] Should MVP include real-time driver tracking or is ETA text sufficient?
+13. Open Questions & Decisions
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (16) Break----------------
+Confidential -- Internal Use Only                                                                                                                                                                       Page 18
+authorised personnel of the FeastOS product team.
+© 2026 FeastOS. All rights reserved. This document is confidential and intended solely for internal use by
+engineering
+1.0                                           Apr 2026                                 Product Lead                           Final review; approved for
+model
+0.9                                           Mar 2026                                 All stakeholders                       Risk register; monetisation
+added
+0.5                                           Feb 2026                                 Product + Eng                         Tech stack finalised; NFRs
+personas
+0.1                                           Jan 2026                                 Product Team                         Initial draft — scope &
+Version                                   Date                                    Author                                Changes
+14.2 Document History
+•     LTV — Customer Lifetime Value: predicted revenue from a customer over their relationship.
+•     RPO — Recovery Point Objective: max acceptable data loss in time units.
+•     RTO — Recovery Time Objective: max acceptable downtime after an incident.
+•     RBAC — Role-Based Access Control: permissions tied to user roles, not individuals.
+•     PWA — Progressive Web App: web app installable on mobile with offline support.
+•     KDS — Kitchen Display System: screen in the kitchen showing live order queue.
+14.1 Glossary
+14. Appendix
+FeastOS  -- Restaurant Web App PRD                                                                                                        v1.0  |  April 2026
+----------------Page (17) Break----------------
